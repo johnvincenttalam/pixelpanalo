@@ -18,7 +18,7 @@ const HowToPlay = () => {
           <h2 className="text-md font-semibold mb-2 text-[#f2bc57]">
             Objective
           </h2>
-          <p className="text-xs">
+          <p className="text-sm font-inter">
             PixelPanalo is a fun and exciting raffle game where players select a
             pixel from an image. Each pixel has a unique number or value. During
             the draw event, lucky players with selected winning pixels will win
@@ -30,7 +30,7 @@ const HowToPlay = () => {
           <h2 className="text-md font-semibold mb-2 text-[#f2bc57]">
             How to Play
           </h2>
-          <ol className="list-decimal list-inside space-y-2 text-xs">
+          <ol className="list-decimal list-inside space-y-2 text-sm font-inter">
             <li>Browse the image displayed on the PixelPanalo game page.</li>
             <li>
               Select any pixel you like — every pixel is numbered and unique!
@@ -50,7 +50,7 @@ const HowToPlay = () => {
           <h2 className="text-md font-semibold mb-2 text-[#f2bc57]">
             Winning and Prizes
           </h2>
-          <p className="text-xs">
+          <p className="text-sm font-inter">
             During the draw event, a random pixel or a set of lucky pixels will
             be selected. If the pixel you picked matches any of the drawn
             winning pixels, you win a prize! Prizes vary from gadgets, cash,
@@ -62,7 +62,7 @@ const HowToPlay = () => {
           <h2 className="text-md font-semibold mb-2 text-[#f2bc57]">
             Draw Events
           </h2>
-          <p className="text-xs">
+          <p className="text-sm font-inter">
             Each raffle has its own draw schedule. Make sure to check the
             countdown or event date on the game page. Winners will be announced
             right after the draw ends.
@@ -71,7 +71,7 @@ const HowToPlay = () => {
 
         <section className="mb-6">
           <h2 className="text-md font-semibold mb-2 text-[#f2bc57]">Tips</h2>
-          <ul className="list-disc list-inside space-y-1 text-xs">
+          <ul className="list-disc list-inside space-y-1 text-sm font-inter">
             <li>Pick multiple pixels to increase your chances of winning.</li>
             <li>Stay updated with draw announcements and result postings.</li>
             <li>

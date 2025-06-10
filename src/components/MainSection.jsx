@@ -650,7 +650,7 @@ const MainSection = () => {
 
   return (
     <section className="w-full max-w-[600px] mx-auto py-6 px-4">
-      {/* <StartPopup /> */}
+      <StartPopup />
       <div className="mb-6">
         <Logo />
         <p className="text-center text-sm lg:text-lg">
@@ -661,10 +661,6 @@ const MainSection = () => {
         <a href="#" className="text-xs text-end text-[#F2BC57]">
           View Prizes
         </a>
-        {/* <div className="card aspect-square w-[90%] max-w-[350px] flex items-center justify-center bg-white rounded-xl shadow-md mx-auto">
-          <p className="text-neutral-900 text-lg md:text-xl">Pixel</p>
-        </div> */}
-
         <div>
           <div
             id="container"
