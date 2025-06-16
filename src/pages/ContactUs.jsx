@@ -26,16 +26,16 @@ const ContactUs = () => {
       <section className="w-full max-w-[600px] mx-auto py-6 px-4">
         <h1 className="text-xl font-bold mb-6 text-center">Contact Us</h1>
 
-        <div className="mb-8 text-center text-sm">
-          <p className="mb-2 text-[#008CFF]">Have questions, feedback, or need help?</p>
-          <p>We’d love to hear from you!</p>
+        <div className="mb-8 text-center font-inter">
+          <p className="text-[#008CFF] font-bold text-md">Have questions, feedback, or need help?</p>
+          <p className="text-sm">We’d love to hear from you!</p>
         </div>
 
         <div className="mb-8">
           <h2 className="text-md font-semibold mb-2 text-[#f2bc57]">
             Get in Touch
           </h2>
-          <ul className="space-y-2 text-xs font-normal">
+          <ul className="space-y-2 text-xs font-inter font-normal">
             <li>
               <strong>Email:</strong> support@pixelpanalo.com
             </li>
@@ -62,7 +62,7 @@ const ContactUs = () => {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="text-center mb-2">
-              <p className="text-xs mb-2">Full Name</p>
+              <p className="text-sm font-semibold font-inter mb-2">Full Name</p>
               <input
                 type="text"
                 name="name"
@@ -74,7 +74,7 @@ const ContactUs = () => {
               />
             </div>
             <div className="text-center mb-2">
-              <p className="text-xs mb-2">Email</p>
+              <p className="text-sm font-semibold font-inter mb-2">Email</p>
               <input
                 type="email"
                 name="email"
@@ -86,7 +86,7 @@ const ContactUs = () => {
               />
             </div>
             <div className="text-center mb-2">
-              <p className="text-xs mb-2">Message</p>
+              <p className="text-sm font-semibold font-inter mb-2">Message</p>
               <textarea
                 type="text"
                 name="message"

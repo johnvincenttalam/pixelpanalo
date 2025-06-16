@@ -56,7 +56,7 @@ body {
 }
 
 .input {
-    @apply w-full bg-white text-[#1B1926] text-sm text-center rounded p-4 focus:outline-none focus:ring-2 focus:ring-[#F2BC57] focus:border-transparent;
+    @apply w-full bg-white text-[#1B1926] text-sm text-center font-inter rounded p-4 focus:outline-none focus:ring-2 focus:ring-[#F2BC57] focus:border-transparent;
 }
 
 /* canvas {

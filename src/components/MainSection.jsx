@@ -5,9 +5,22 @@ import Overview from "./Overview";
 import StartPopup from "./StartPopup";
 import BG from "../assets/bg1.png";
 import { toast } from "react-toastify";
+import {
+  Gift,
+  Eclipse,
+  Moon,
+  Map,
+  ZoomOut,
+  RotateCcw,
+  Trash2,
+} from "lucide-react";
+import Tooltip from "../components/Tooltip";
 
 const MainSection = () => {
   const navigate = useNavigate();
+
+  // Popup
+  const [isPopupOpen, setIsPopupOpen] = useState(true);
 
   const price = 60; // Example price per pixel
 
@@ -186,7 +199,7 @@ const MainSection = () => {
     });
 
     // Draw selected tickets (green)
-    ctx.fillStyle = "rgba(0, 255, 0, 0.5)";
+    ctx.fillStyle = "#008CFF";
     selectedTickets.forEach((ticket) => {
       const [x, y] = parseTicket(ticket);
       ctx.fillRect(x, y, 1, 1);
@@ -240,7 +253,7 @@ const MainSection = () => {
     });
 
     // Draw selected tickets on minimap (green)
-    minimapCtx.fillStyle = "rgba(0, 255, 0, 0.7)";
+    minimapCtx.fillStyle = "#008CFF";
     selectedTickets.forEach((ticket) => {
       const [x, y] = parseTicket(ticket);
       minimapCtx.fillRect(x * ratioX, y * ratioY, ratioX, ratioY);
@@ -293,15 +306,15 @@ const MainSection = () => {
 
       // Check if the pixel is within the grid boundaries (0-99 for both x and y)
       if (x < 0 || x >= gridWidth || y < 0 || y >= gridHeight) {
-        setResultMessage(`Pixel (${x}, ${y}) is outside the grid boundaries.`);
-        toast.error(`Pixel (${x}, ${y}) is outside the grid boundaries.`);
+        // setResultMessage(`Pixel (${x}, ${y}) is outside the grid boundaries.`);
+        toast.error(`Pixel # ${x}${y} is outside the grid boundaries.`);
         return;
       }
 
       // Check if the ticket is specifically blocked or already taken
       if (ticket === blockedPixel || takenTickets.has(ticket)) {
-        setResultMessage(`Pixel (${x}, ${y}) is already taken or blocked.`);
-        toast.warning(`Pixel (${x}, ${y}) is already taken.`);
+        // setResultMessage(`Pixel (${x}, ${y}) is already taken or blocked.`);
+        toast.warning(`Pixel # ${x}${y} is already taken.`);
         return;
       }
 
@@ -531,7 +544,8 @@ const MainSection = () => {
 
   const clearAllTickets = useCallback(() => {
     setSelectedTickets(new Set());
-    setResultMessage("🧹 All tickets cleared.");
+    // setResultMessage("🧹 All tickets cleared.");
+    toast.info("All selected tickets have been cleared.");
   }, []);
 
   // Attach and clean up event listeners
@@ -630,11 +644,6 @@ const MainSection = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // const timeout = setTimeout(() => {
-    //   resetZoom();
-    // }, 3000);
-      
-
     const ctx = canvas.getContext("2d");
     const image = new Image();
     image.src = BG; // Ensure BG is in the public folder
@@ -650,7 +659,7 @@ const MainSection = () => {
 
   return (
     <section className="w-full max-w-[600px] mx-auto py-6 px-4">
-      <StartPopup />
+      <StartPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       <div className="mb-6">
         <Logo />
         <p className="text-center text-sm lg:text-lg">
@@ -658,9 +667,6 @@ const MainSection = () => {
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <a href="#" className="text-xs text-end text-[#F2BC57]">
-          View Prizes
-        </a>
         <div>
           <div
             id="container"
@@ -706,28 +712,41 @@ const MainSection = () => {
           </div>
         </div>
 
-        <div className="flex gap-3 justify-center mb-6">
-          <button
-            onClick={() => setIsGrayscale(!isGrayscale)}
-            className="text-[10px] text-center"
-          >
-            {isGrayscale ? "Disable Grayscale" : "Enable Grayscale"}
-          </button>
-          <button
-            onClick={() => setShowMinimap((prev) => !prev)}
-            className="text-[10px] text-center"
-          >
-            {showMinimap ? "Hide Minimap" : "Show Minimap"}
-          </button>
-          <button onClick={resetZoom} className="text-[10px] text-center">
-            Reset Zoom
-          </button>
-          <button
-            onClick={clearAllTickets}
-            className="text-[10px] text-center text-red-600"
-          >
-            Clear Selected
-          </button>
+        <div className="flex gap-3 justify-end mb-6">
+          <Tooltip text="View Prizes">
+            <button onClick={() => setIsPopupOpen(true)} className="mr-auto">
+              <Gift />
+            </button>
+          </Tooltip>
+          <Tooltip text="Grayscale">
+            <button
+              onClick={() => setIsGrayscale(!isGrayscale)}
+              className="text-[10px] text-center"
+            >
+              {isGrayscale ? <Moon className="text-[#008CFF]" /> : <Moon />}
+            </button>
+          </Tooltip>
+          <Tooltip text="Hide/Show Map">
+            <button
+              onClick={() => setShowMinimap((prev) => !prev)}
+              className="text-[10px] text-center"
+            >
+              {showMinimap ? <Map /> : <Map className="text-[#008CFF]" />}
+            </button>
+          </Tooltip>
+          <Tooltip text="Reset Zoom">
+            <button onClick={resetZoom} className="text-[10px] text-center">
+              <RotateCcw />
+            </button>
+          </Tooltip>
+          <Tooltip text="Clear All Selected">
+            <button
+              onClick={clearAllTickets}
+              className="text-[10px] text-center text-red-600"
+            >
+              <Trash2 />
+            </button>
+          </Tooltip>
         </div>
 
         {/* <div
@@ -740,7 +759,7 @@ const MainSection = () => {
         <div className="flex flex-col items-center justify-center gap-2 mb-6">
           <p className="text-sm">Selected Pixels</p>
           <div className="card min-h-[55px]">
-            <p className="text-[#1B1926] text-sm text-center">
+            <p className="text-[#1B1926] text-sm text-center font-bold font-inter">
               {Array.from(selectedTickets)
                 .sort()
                 .map((ticket, index) => (

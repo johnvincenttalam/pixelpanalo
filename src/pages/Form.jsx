@@ -41,7 +41,7 @@ const Form = () => {
             Fill Your Information
           </h1>
           <div className="text-center mb-2">
-            <p className="text-xs mb-2">Full Name</p>
+            <p className="text-sm font-semibold font-inter mb-2">Full Name</p>
             <input
               type="text"
               name="name"
@@ -53,7 +53,7 @@ const Form = () => {
             />
           </div>
           <div className="text-center mb-2">
-            <p className="text-xs mb-2">Phone #</p>
+            <p className="text-sm font-semibold font-inter mb-2">Phone #</p>
             <input
               type="tel"
               name="phone"
@@ -65,7 +65,7 @@ const Form = () => {
             />
           </div>
           <div className="text-center mb-2">
-            <p className="text-xs mb-2">Email</p>
+            <p className="text-sm font-semibold font-inter mb-2">Email</p>
             <input
               type="email"
               name="email"
@@ -81,7 +81,7 @@ const Form = () => {
             <div className="flex flex-col items-center justify-center gap-2 mb-6">
               <p className="text-sm">Selected Pixels</p>
               <div className="card">
-                <p className="text-[#1B1926] text-sm text-center">
+                <p className="text-[#1B1926] text-sm text-center font-bold font-inter">
                   6101, 6102, 6103, 6104, 6105, 6106, 6107, 6108, 6109
                 </p>
               </div>
