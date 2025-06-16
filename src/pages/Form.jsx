@@ -1,11 +1,14 @@
 import Logo from "../components/Logo";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Back from "../components/Back";
 import { useState } from "react";
 import Overview from "../components/Overview";
 
 const Form = () => {
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const { selectedTickets = [], totalPixels = 0, totalAmount = 0 } = location.state || {};
 
   const [formData, setFormData] = useState({
     name: "",
@@ -82,12 +85,12 @@ const Form = () => {
               <p className="text-sm">Selected Pixels</p>
               <div className="card">
                 <p className="text-[#1B1926] text-sm text-center font-bold font-inter">
-                  6101, 6102, 6103, 6104, 6105, 6106, 6107, 6108, 6109
+                  {selectedTickets.join(", ")}
                 </p>
               </div>
             </div>
             <div>
-              <Overview totalPixels={9} totalAmount={250} />
+              <Overview totalPixels={totalPixels} totalAmount={totalAmount} />
               <button
                 type="submit"
                 disabled={!isFormValid}

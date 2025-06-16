@@ -657,6 +657,17 @@ const MainSection = () => {
     // return () => clearTimeout(timeout);
   }, []);
 
+  // Checkout Pixels
+  const handleBuy = () => {
+    navigate("/checkout", {
+      state: {
+        selectedTickets: Array.from(selectedTickets),
+        totalPixels: selectedTickets.size,
+        totalAmount: selectedTickets.size * price,
+      },
+    });
+  };
+
   return (
     <section className="w-full max-w-[600px] mx-auto py-6 px-4">
       <StartPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
@@ -714,14 +725,14 @@ const MainSection = () => {
 
         <div className="flex gap-3 justify-end mb-6">
           <Tooltip text="View Prizes">
-            <button onClick={() => setIsPopupOpen(true)} className="mr-auto">
+            <button onClick={() => setIsPopupOpen(true)} className="mr-auto hover:text-[#008CFF] transition-colors">
               <Gift />
             </button>
           </Tooltip>
           <Tooltip text="Grayscale">
             <button
               onClick={() => setIsGrayscale(!isGrayscale)}
-              className="text-[10px] text-center"
+              className="text-[10px] text-center hover:text-[#008CFF] transition-colors"
             >
               {isGrayscale ? <Moon className="text-[#008CFF]" /> : <Moon />}
             </button>
@@ -729,13 +740,13 @@ const MainSection = () => {
           <Tooltip text="Hide/Show Map">
             <button
               onClick={() => setShowMinimap((prev) => !prev)}
-              className="text-[10px] text-center"
+              className="text-[10px] text-center hover:text-[#008CFF] transition-colors"
             >
               {showMinimap ? <Map /> : <Map className="text-[#008CFF]" />}
             </button>
           </Tooltip>
           <Tooltip text="Reset Zoom">
-            <button onClick={resetZoom} className="text-[10px] text-center">
+            <button onClick={resetZoom} className="text-[10px] text-center hover:text-[#008CFF] transition-colors">
               <RotateCcw />
             </button>
           </Tooltip>
@@ -776,7 +787,7 @@ const MainSection = () => {
             totalPixels={selectedTickets.size}
             totalAmount={selectedTickets.size * price}
           />
-          <button onClick={() => navigate("/checkout")} className="btn-primary">
+          <button onClick={handleBuy} className="btn-primary">
             Buy
           </button>
         </div>
