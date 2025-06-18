@@ -61,7 +61,7 @@ const ContactUs = () => {
             Send Us a Message
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="text-center mb-2">
+            <div className="mb-2">
               <p className="text-sm font-semibold font-inter mb-2">Full Name</p>
               <input
                 type="text"
@@ -69,11 +69,11 @@ const ContactUs = () => {
                 id="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="input"
+                className="input !text-start"
                 placeholder="Enter Name"
               />
             </div>
-            <div className="text-center mb-2">
+            <div className="mb-2">
               <p className="text-sm font-semibold font-inter mb-2">Email</p>
               <input
                 type="email"
@@ -81,11 +81,11 @@ const ContactUs = () => {
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="input"
+                className="input !text-start"
                 placeholder="Enter Email"
               />
             </div>
-            <div className="text-center mb-2">
+            <div className="mb-2">
               <p className="text-sm font-semibold font-inter mb-2">Message</p>
               <textarea
                 type="text"
@@ -93,7 +93,7 @@ const ContactUs = () => {
                 id="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="input"
+                className="input !text-start"
                 placeholder="Enter Message"
                 rows="4"
               />

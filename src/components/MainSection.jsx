@@ -15,6 +15,7 @@ import {
   Trash2,
 } from "lucide-react";
 import Tooltip from "../components/Tooltip";
+import { motion, AnimatePresence } from "framer-motion";
 
 const MainSection = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const MainSection = () => {
     return 5;
   }, []);
 
-  const [scale, setScale] = useState(5);
+  const [scale, setScale] = useState(6);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -71,14 +72,6 @@ const MainSection = () => {
   const derivedGridSize = Math.ceil(Math.sqrt(totalPixels));
   const gridWidth = derivedGridSize;
   const gridHeight = derivedGridSize;
-
-  //   console.log(
-  //     `Grid Size: ${gridWidth}x${gridHeight}, Total Pixels: ${totalPixels}`
-  //   );
-  //   console.log(`Derived Grid Size: ${derivedGridSize}`);
-
-  //   const gridWidth = Math.ceil(Math.sqrt(totalPixels));
-  //   const gridHeight = Math.ceil(totalPixels / gridWidth);
 
   // Define the maximum number of tickets a user can select.
   // If set to 9999, it implies that the total grid might have 10000 pixels (0000-9999),
@@ -651,7 +644,7 @@ const MainSection = () => {
       ctx.drawImage(image, 0, 0);
       drawGrid(ctx); // call your drawing logic
       // applyTransform();
-      setIsLoading(false); // hide loader
+      // setIsLoading(false); // hide loader
     };
 
     // return () => clearTimeout(timeout);
@@ -659,6 +652,10 @@ const MainSection = () => {
 
   // Checkout Pixels
   const handleBuy = () => {
+    if (selectedTickets.size === 0) {
+      toast.error("Please select at least one pixel before proceeding to checkout.");
+      return;
+    }
     navigate("/checkout", {
       state: {
         selectedTickets: Array.from(selectedTickets),
@@ -668,9 +665,16 @@ const MainSection = () => {
     });
   };
 
+  // Close popup and reset zoom
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    resetZoom(); // You can await it if it's a Promise
+    setIsLoading(false); // hide loader
+  };
+
   return (
     <section className="w-full max-w-[600px] mx-auto py-6 px-4">
-      <StartPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+      <StartPopup isOpen={isPopupOpen} onClose={handleClosePopup} />
       <div className="mb-6">
         <Logo />
         <p className="text-center text-sm lg:text-lg">
@@ -685,22 +689,7 @@ const MainSection = () => {
             ref={containerRef}
           >
             {isLoading && (
-              <div
-                style={{
-                  position: "absolute",
-                  zIndex: 10,
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: "rgba(255, 255, 255, 0.8)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.5rem",
-                  fontWeight: "bold",
-                }}
-              >
+              <div className="absolute inset-0 z-10 bg-white text-[#1B1926] flex items-center justify-center text-xl font-bold">
                 Loading...
               </div>
             )}
@@ -725,14 +714,14 @@ const MainSection = () => {
 
         <div className="flex gap-3 justify-end mb-6">
           <Tooltip text="View Prizes">
-            <button onClick={() => setIsPopupOpen(true)} className="mr-auto hover:text-[#008CFF] transition-colors">
+            <button onClick={() => setIsPopupOpen(true)} className="btn-icon">
               <Gift />
             </button>
           </Tooltip>
           <Tooltip text="Grayscale">
             <button
               onClick={() => setIsGrayscale(!isGrayscale)}
-              className="text-[10px] text-center hover:text-[#008CFF] transition-colors"
+              className="btn-icon"
             >
               {isGrayscale ? <Moon className="text-[#008CFF]" /> : <Moon />}
             </button>
@@ -740,21 +729,18 @@ const MainSection = () => {
           <Tooltip text="Hide/Show Map">
             <button
               onClick={() => setShowMinimap((prev) => !prev)}
-              className="text-[10px] text-center hover:text-[#008CFF] transition-colors"
+              className="btn-icon"
             >
               {showMinimap ? <Map /> : <Map className="text-[#008CFF]" />}
             </button>
           </Tooltip>
           <Tooltip text="Reset Zoom">
-            <button onClick={resetZoom} className="text-[10px] text-center hover:text-[#008CFF] transition-colors">
+            <button onClick={resetZoom} className="btn-icon">
               <RotateCcw />
             </button>
           </Tooltip>
           <Tooltip text="Clear All Selected">
-            <button
-              onClick={clearAllTickets}
-              className="text-[10px] text-center text-red-600"
-            >
+            <button onClick={clearAllTickets} className="btn-icon">
               <Trash2 />
             </button>
           </Tooltip>
@@ -770,18 +756,27 @@ const MainSection = () => {
         <div className="flex flex-col items-center justify-center gap-2 mb-6">
           <p className="text-sm">Selected Pixels</p>
           <div className="card min-h-[55px]">
-            <p className="text-[#1B1926] text-sm text-center font-bold font-inter">
-              {Array.from(selectedTickets)
-                .sort()
-                .map((ticket, index) => (
-                  <span key={ticket}>
-                    {ticket}
-                    {index < selectedTickets.size - 1 ? ", " : ""}
-                  </span>
-                ))}
+            <p className="text-[#1B1926] text-sm text-center font-bold font-inter flex flex-wrap justify-center gap-1">
+              <AnimatePresence>
+                {Array.from(selectedTickets)
+                  .sort()
+                  .map((ticket, index) => (
+                    <motion.span
+                      key={ticket}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                    >
+                      {ticket}
+                      {index < selectedTickets.size - 1 ? ", " : ""}
+                    </motion.span>
+                  ))}
+              </AnimatePresence>
             </p>
           </div>
         </div>
+
         <div>
           <Overview
             totalPixels={selectedTickets.size}

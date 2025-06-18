@@ -1,14 +1,28 @@
 import Logo from "../components/Logo";
 import { useNavigate, useLocation } from "react-router-dom";
 import Back from "../components/Back";
+import Confirmation from "../components/ConfirmationPopup";
 import { useState } from "react";
 import Overview from "../components/Overview";
 
 const Form = () => {
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
 
+  const handleBackClick = () => {
+    setShowConfirm(true);
+  };
+
+  const handleConfirm = () => {
+    navigate(-1); // go back
+  };
+
   const location = useLocation();
-  const { selectedTickets = [], totalPixels = 0, totalAmount = 0 } = location.state || {};
+  const {
+    selectedTickets = [],
+    totalPixels = 0,
+    totalAmount = 0,
+  } = location.state || {};
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,7 +45,14 @@ const Form = () => {
 
   return (
     <>
-      <Back />
+      <Back onClick={handleBackClick} />
+
+      <Confirmation
+        isOpen={showConfirm}
+        onConfirm={handleConfirm}
+        onCancel={() => setShowConfirm(false)}
+      />
+
       <section className="w-full max-w-[600px] mx-auto py-6 px-4">
         <div className="mb-6">
           <Logo />

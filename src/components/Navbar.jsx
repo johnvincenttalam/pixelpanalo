@@ -34,15 +34,16 @@ const NavBar = () => {
             mobileDrawerOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="flex flex-col h-full justify-between p-5">
+          <div className="flex flex-col h-full justify-between p-4">
             <div className="flex flex-col">
               <button className="mb-6 ml-auto" onClick={toggleNavbar}>
                 <X />
               </button>
               <ul>
                 {navItems.map((item, index) => (
-                  <li key={index} className="py-4">
-                    <a href={item.href} onClick={toggleNavbar}>
+                  <li key={index} className="">
+                    <a href={item.href} onClick={toggleNavbar} className="flex items-center text-white p-4 rounded hover:bg-[#f2bc57] hover:text-[#1B1926] transition-colors duration-300 ease-in-out">
+                      <span className="mr-2">{item.icon}</span>
                       {item.label}
                     </a>
                   </li>

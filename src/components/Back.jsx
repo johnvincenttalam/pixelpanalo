@@ -1,7 +1,7 @@
 import { Menu, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const Back = () => {
+const Back = ({ onClick }) => {
   const navigate = useNavigate();
 
   return (
@@ -9,7 +9,7 @@ const Back = () => {
       <div className="w-full max-w-7xl px-4 mx-auto relative text-sm">
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center">
-            <button onClick={() => navigate(-1)} className="p-2 bg-[#1B1926] rounded-md shadow">
+            <button onClick={onClick} className="p-2 bg-[#1B1926] rounded-md shadow">
               <ArrowLeft />
             </button>
           </div>

@@ -1,19 +1,14 @@
-import Back from "../components/Back";
 import NavBar from "../components/NavBar";
+import PixelPanaloLogoWhite from "../components/PixelPanaloLogoWhite";
 import { useState } from "react";
 import { soldPixels } from "../constants";
 // import { Search } from "lucide-react";
-import { Search } from "lucide-react"; // or replace with any icon
+import { Search, Loader2 } from "lucide-react"; // or replace with any icon
 
 const PixelSearch = () => {
   const [formData, setFormData] = useState({ email: "" });
   const [purchasedPixels, setPurchasedPixels] = useState([]);
-  const [allPixels, setAllPixels] = useState([
-    // Example dataset
-    { email: "test@example.com", pixelNumber: 101, drawDate: "2025-06-01" },
-    { email: "user@example.com", pixelNumber: 102, drawDate: "2025-06-05" },
-    { email: "test@example.com", pixelNumber: 103, drawDate: "2025-06-10" },
-  ]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,10 +16,16 @@ const PixelSearch = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const results = soldPixels.filter(
-      (pixel) => pixel.email.toLowerCase() === formData.email.toLowerCase()
-    );
-    setPurchasedPixels(results);
+    setIsLoading(true);
+
+    // Simulate async delay like fetching from API
+    setTimeout(() => {
+      const results = soldPixels.filter(
+        (pixel) => pixel.email.toLowerCase() === formData.email.toLowerCase()
+      );
+      setPurchasedPixels(results);
+      setIsLoading(false);
+    }, 1000);
   };
 
   return (
@@ -46,26 +47,46 @@ const PixelSearch = () => {
               placeholder="Enter Email"
               required
             />
-            <button type="submit" className="btn-primary !w-fit">
-              <Search />
+            <button
+              type="submit"
+              className="btn-primary !w-fit flex items-center justify-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="animate-spin h-4 w-4" />
+              ) : (
+                <Search />
+              )}
             </button>
           </div>
         </form>
 
         <div className="flex flex-col gap-2 mt-6">
-          {purchasedPixels.length > 0 ? (
+          {isLoading ? (
+            <p className="text-center text-sm text-slate-500 animate-pulse">
+              Searching pixels...
+            </p>
+          ) : purchasedPixels.length > 0 ? (
             purchasedPixels.map((pixel, index) => (
               <div
                 key={index}
                 className="flex items-center justify-between p-4 border border-slate-500 rounded-md"
               >
-                <p className="text-md">
-                  Pixel#{" "}
-                  <span className="text-[#f2bc57]">{pixel.pixelNumber}</span>
-                </p>
+                <div className="flex gap-2 items-center">
+                  <div className="w-5 h-5">
+                    <PixelPanaloLogoWhite />
+                  </div>
+                  <p className="text-sm">
+                    Pixel#{" "}
+                    <span className="text-[#f2bc57]">{pixel.pixelNumber}</span>
+                  </p>
+                </div>
+                <div className="font-inter font-thin text-slate-300 ms-auto me-4">|</div>
                 <div className="flex flex-col">
-                  <p className="text-[10px] text-slate-500">Draw Date</p>
-                  <p className="text-[10px]">{pixel.drawDate}</p>
+                  <p className="text-[10px] text-slate-500 font-inter">
+                    Draw Date
+                  </p>
+                  <p className="text-[10px] font-inter">{pixel.drawDate}</p>
                 </div>
               </div>
             ))
